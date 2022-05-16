@@ -6,11 +6,13 @@ import Cookies from "js-cookie";
 import styled from "styled-components";
 
 export function Bsc() {
-  // apikeyをcookieから取得
+  // apikeyをcookieから取得して返すメソッド
   const getInputApiKey = () => {
     const cookieApiKey = Cookies.get("apiKey");
     if (cookieApiKey === "null" || cookieApiKey === undefined) {
+      //apikeyがcookieから取得できなかった場合、入力を求める
       const inputApiKey = prompt("BSCのAPIKEYを入力してください");
+      //入力値をcookieに設定
       Cookies.set("apiKey", inputApiKey);
       setApiKey(inputApiKey);
       return inputApiKey;
@@ -20,37 +22,48 @@ export function Bsc() {
   };
   const [apiKey, setApiKey] = useState("");
   const [play, { stop, pause }] = useSound(Sound);
+  //apikeyをpropsで渡す
   const { getBalance, titaBalance, isSuccess } = UseGetBalance({
     key: getInputApiKey(),
   });
+  //内部時刻の状態定義
   const [time, setTime] = useState(new Date());
+  //画面表示時刻の状態定義
   const [displayTime, setDisplayTime] = useState(new Date());
+  //残高取得履歴の状態定義
   const [timeHistory, setTimeHistory] = useState<histosy[]>([]);
+  //履歴のインターフェース
   type histosy = {
     time: string;
     titaBalance: number;
   };
-
+  // 画面表示時刻[displayTime]が更新されるごとに実行される
+  // BSCScan apiで残高を取得後、画面に更新。残高が4000以上の場合、かつ前回の音通知から30秒以上経過している場合、音通知を行う
   useEffect(() => {
     getBalance();
     const diff = new Date().getTime() - time.getTime();
     const fixDiff = diff / 1000;
     console.log("timeDiff:" + fixDiff);
+    // 残高4000以上
     if (titaBalance > 4000) {
+      // 時間差30秒
       if (fixDiff > 30) {
+        // 音通知
         play();
         console.log("setTime: " + time);
+        // 現在の時刻を設定
         setTimeSecond();
       }
       console.log(time);
     }
   }, [displayTime]);
-
+  // 画面表示時刻を1秒刻みで更新
   useEffect(() => {
     setInterval(() => {
       setDisplayTime(new Date());
     }, 1000);
   }, []);
+  // TITA残高に更新があった場合、時刻と残高を取得し、残高取得履歴に追加
   useEffect(() => {
     if (titaBalance) {
       timeHistory.push({
@@ -59,10 +72,12 @@ export function Bsc() {
       });
     }
   }, [titaBalance]);
+  // 現在の時刻を設定（時間差を測定する為）
   const setTimeSecond = () => {
     const now_date = new Date();
     setTime(now_date);
   };
+  // 残高取得履歴ボタン押下時、時刻と残高を取得し、残高取得履歴に追加
   const setHistory = () => {
     if (titaBalance) {
       timeHistory.push({
@@ -72,13 +87,14 @@ export function Bsc() {
     }
     console.log(timeHistory);
   };
-
+  // 初期処理で残高取得履歴を削除
   useEffect(() => {
     deleteHistory();
   }, []);
   const deleteHistory = () => {
     setTimeHistory([]);
   };
+  //API Cookie削除ボタン押下後、Cookieを削除し画面リロード
   const reLoad = () => {
     Cookies.remove("apiKey");
     window.location.reload();
@@ -137,7 +153,7 @@ export function Bsc() {
           reLoad();
         }}
       >
-        API Cookie削除
+        API Cookie 削除
       </BaseButton>
     </div>
   );
