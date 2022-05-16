@@ -14,13 +14,11 @@ export function Bsc() {
       const inputApiKey = prompt("BSCのAPIKEYを入力してください");
       //入力値をcookieに設定
       Cookies.set("apiKey", inputApiKey);
-      setApiKey(inputApiKey);
       return inputApiKey;
     } else {
       return cookieApiKey;
     }
   };
-  const [apiKey, setApiKey] = useState("");
   const [play, { stop, pause }] = useSound(Sound);
   //apikeyをpropsで渡す
   const { getBalance, titaBalance, isSuccess } = UseGetBalance({
