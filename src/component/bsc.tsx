@@ -97,6 +97,13 @@ export function Bsc() {
     Cookies.remove("apiKey");
     window.location.reload();
   };
+  const onSound = () => {
+    play();
+    // 30秒前に設定
+    const subtraction_time = 30 * 1000;
+    const now_date = new Date();
+    setTime(new Date(now_date.getTime() - subtraction_time));
+  };
   return (
     <div>
       <header>
@@ -109,7 +116,7 @@ export function Bsc() {
       <h3>{`CONTRACT TITA BALANCE: ${titaBalance} TITA`}</h3>
       <BaseButton
         onClick={() => {
-          play();
+          onSound();
         }}
       >
         SOUND通知許可
