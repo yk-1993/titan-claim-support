@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import styled from "styled-components";
 
 export function Bsc() {
+  // apikeyをcookieから取得
   const getInputApiKey = () => {
     const cookieApiKey = Cookies.get("apiKey");
     if (cookieApiKey === "null" || cookieApiKey === undefined) {
