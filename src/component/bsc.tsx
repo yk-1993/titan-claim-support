@@ -11,7 +11,7 @@ export function Bsc() {
     const cookieApiKey = Cookies.get("apiKey");
     if (cookieApiKey === "null" || cookieApiKey === undefined) {
       //apikeyがcookieから取得できなかった場合、入力を求める
-      const inputApiKey = prompt("BSCのAPIKEYを入力してください");
+      const inputApiKey = prompt("APIKEYを入力してください");
       //入力値をcookieに設定
       Cookies.set("apiKey", inputApiKey);
       return inputApiKey;
