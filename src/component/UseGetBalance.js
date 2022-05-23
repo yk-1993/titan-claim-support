@@ -22,11 +22,12 @@ export const UseGetBalance = (props) => {
           const balance = res.data.result / 1e18;
           // 取得した残高をコンソール表示
           console.log("balance: " + balance + " TITA");
-          // 残高を状態変数に設定
-          setTitaBalance(balance);
           if (res.data.message === "OK") {
+            // 残高を状態変数に設定
+            setTitaBalance(balance);
             setIsSuccess(true);
           } else {
+            setTitaBalance(null);
             setIsSuccess(false);
           }
         }

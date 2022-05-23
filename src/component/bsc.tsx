@@ -19,7 +19,7 @@ export function Bsc() {
       return cookieApiKey;
     }
   };
-  const [play, { stop, pause }] = useSound(Sound);
+  const [play] = useSound(Sound);
   //apikeyをpropsで渡す
   const { getBalance, titaBalance, isSuccess } = UseGetBalance({
     key: getInputApiKey(),
