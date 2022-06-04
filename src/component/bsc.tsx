@@ -127,7 +127,7 @@ export function Bsc() {
   return (
     <div>
       <header>
-        Titan Hunters Claim Support Tool v0.1 by{" "}
+        Titan Hunters Claim Support Tool v0.2 by{" "}
         <a href="https://twitter.com/aoooojpn" target="_blank">
           @aoooojpn
         </a>
