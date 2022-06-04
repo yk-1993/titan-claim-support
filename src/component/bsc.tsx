@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UseGetBalance } from "./UseGetBalance.js";
+import { UseGetTransaction } from "./UseGetTransaction";
 import useSound from "use-sound";
 import Sound from "../se/alert.mp3";
 import Cookies from "js-cookie";
@@ -24,6 +25,10 @@ export function Bsc() {
   const { getBalance, titaBalance, isSuccess } = UseGetBalance({
     key: getInputApiKey(),
   });
+  //apikeyをpropsで渡す
+  const { txTime, isSuccessT, getTransaction } = UseGetTransaction({
+    key: Cookies.get("apiKey"),
+  });
   //内部時刻の状態定義
   const [time, setTime] = useState(new Date());
   //画面表示時刻の状態定義
@@ -39,9 +44,24 @@ export function Bsc() {
   // BSCScan apiで残高を取得後、画面に更新。残高が4000以上の場合、かつ前回の音通知から30秒以上経過している場合、音通知を行う
   useEffect(() => {
     getBalance();
+    getTransaction();
+    // 現在時刻を取得
+    const nowDate = new Date();
+    // 現在時刻から、最新１件のトランザクション時刻を引く
+    const txDiffTime = nowDate.getTime() - txTime.getTime();
+    // TITA残高の時差
     const diff = new Date().getTime() - time.getTime();
+    // ミリ秒を返還
     const fixDiff = diff / 1000;
     console.log("timeDiff:" + fixDiff);
+    console.log("txDiffTimeSecond: " + txDiffTime / 1000);
+    // 時刻とＴＸ時刻の差をミリ秒にし、30秒より小さい場合
+    if (txDiffTime / 1000 < 5 && isSuccessT) {
+      console.log("txDiffTimeSecond: " + txDiffTime / 1000);
+      // 音通知
+      play();
+      setTimeSecond();
+    }
     // 残高4000以上
     if (titaBalance > 4000) {
       // 時間差30秒
@@ -114,6 +134,7 @@ export function Bsc() {
       </header>
       <h1>{displayTime.toLocaleTimeString()}</h1>
       <h3>{`CONTRACT TITA BALANCE: ${titaBalance} TITA`}</h3>
+      <h3>{`LAST POOL Tx TIME: ${txTime.toLocaleDateString()} ${txTime.toLocaleTimeString()}`}</h3>
       <BaseButton
         onClick={() => {
           onSound();
@@ -121,7 +142,9 @@ export function Bsc() {
       >
         SOUND通知許可
       </BaseButton>
-      <span>※4000TITA以上の場合に通知 / 30秒</span>
+      <span>
+        ※4000TITA以上の場合･トランザクション生成５秒以内の場合に通知 / 30秒
+      </span>
 
       <BaseButton
         onClick={() => {
