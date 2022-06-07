@@ -127,7 +127,7 @@ export function Bsc() {
   return (
     <div>
       <header>
-        Titan Hunters Claim Support Tool v0.2 by{" "}
+        Titan Hunters Claim Support Tool v0.3 by{" "}
         <a href="https://twitter.com/aoooojpn" target="_blank">
           @aoooojpn
         </a>
@@ -189,7 +189,7 @@ export function Bsc() {
         <p>
           06/22機能追加
           <br />
-          APIのアクセス過多でTITA残高がリアルタイムで取得できていないことが最近多いので、
+          APIのアクセス過多でTITA残高がリアルタイムで取得できていないことが多いので（推測）、
           <br />
           送金元のアドレスから送金トランザクションの情報も取得するように修正(試験導入)。
           <br />
