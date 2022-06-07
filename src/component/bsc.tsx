@@ -136,7 +136,7 @@ export function Bsc() {
       <h2>{`CONTRACT TITA BALANCE: ${titaBalance} TITA`}</h2>
       <h2>【最終プール情報▼】</h2>
       <h4>{`LAST POOL Tx TIME: ${txTime.toLocaleDateString()} ${txTime.toLocaleTimeString()}`}</h4>
-      <h4>{`LAST POOL POOL BALANCE: ${txState}`}</h4>
+      <h4>{`LAST POOL BALANCE: ${txState}`}</h4>
       <BaseButton
         onClick={() => {
           onSound();
@@ -198,8 +198,8 @@ export function Bsc() {
         <p>
           TITA残高は参考程度に、トランザクションの情報を見るようしてみてください。
         </p>
-        <p>LAST POOL Tx TIME(最後のPOOLトランザクション生成時間)</p>
-        <p>POOL BALANCE（最後のPOOLで送金されるTITA量）</p>
+        <p>・LAST POOL Tx TIME(最後のPOOLトランザクション生成時間)</p>
+        <p>・LAST POOL BALANCE（最後のPOOLで送金されるTITA量）</p>
         <p>
           ※APIを1秒/２つに増やしたことにより、秒間アクセス制限（秒間5秒）にひっかかる可能性があるので、複数のタブやデバイスで開くとAPIが動かない可能性があります（複数のデバイスでの利用はOKですが同時起動すると動かないかもしれません）。
         </p>
