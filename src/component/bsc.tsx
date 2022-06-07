@@ -203,6 +203,14 @@ export function Bsc() {
         <p>
           ※APIを1秒/２つに増やしたことにより、秒間アクセス制限（秒間5秒）にひっかかる可能性があるので、複数のタブやデバイスで開くとAPIが動かない可能性があります（複数のデバイスでの利用はOKですが同時起動すると動かないかもしれません）。
         </p>
+        <p>
+          <a
+            href="https://bscscan.com/address/0x56157ab5efa086b3bdbf18ed01ca928a7c242087#tokentxns"
+            target="_blank"
+          >
+            BSC scan取得元参考（別タブで開きます）
+          </a>
+        </p>
       </Text1>
     </div>
   );
