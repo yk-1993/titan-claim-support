@@ -26,7 +26,7 @@ export function Bsc() {
     key: getInputApiKey(),
   });
   //apikeyをpropsで渡す
-  const { txTime, isSuccessT, getTransaction } = UseGetTransaction({
+  const { txTime, isSuccessT, getTransaction, txState } = UseGetTransaction({
     key: Cookies.get("apiKey"),
   });
   //内部時刻の状態定義
@@ -133,8 +133,10 @@ export function Bsc() {
         </a>
       </header>
       <h1>{displayTime.toLocaleTimeString()}</h1>
-      <h3>{`CONTRACT TITA BALANCE: ${titaBalance} TITA`}</h3>
-      <h3>{`LAST POOL Tx TIME: ${txTime.toLocaleDateString()} ${txTime.toLocaleTimeString()}`}</h3>
+      <h2>{`CONTRACT TITA BALANCE: ${titaBalance} TITA`}</h2>
+      <h2>【最終プール情報▼】</h2>
+      <h4>{`LAST POOL Tx TIME: ${txTime.toLocaleDateString()} ${txTime.toLocaleTimeString()}`}</h4>
+      <h4>{`LAST POOL POOL BALANCE: ${txState}`}</h4>
       <BaseButton
         onClick={() => {
           onSound();
@@ -183,6 +185,22 @@ export function Bsc() {
       >
         API Cookie 削除
       </BaseButton>
+      <Text1>
+        <p>
+          06/22機能追加
+          <br />
+          APIのアクセス過多でTITA残高がリアルタイムで取得できていないことが最近多いので、
+          <br />
+          送金元のアドレスから送金トランザクションの情報も取得するように修正(試験導入)。
+          <br />
+          2回目以降のアドレスに送金されるTxのみ取得します。
+        </p>
+        <p>
+          TITA残高ではなくトランザクションの情報を見るようしてみてください。
+        </p>
+        <p>LAST POOL Tx TIME(最後のPOOLトランザクション生成時間)</p>
+        <p>POOL BALANCE（最後のPOOLで送金されるTITA量）</p>
+      </Text1>
     </div>
   );
 }
@@ -216,4 +234,10 @@ const HistoryBox = styled.div`
   margin: 20px auto;
   border-radius: 20px;
   width: 90%;
+`;
+const Text1 = styled.div`
+  text-align: left;
+  width: 70%;
+  margin: auto;
+  font-size: 14px;
 `;
